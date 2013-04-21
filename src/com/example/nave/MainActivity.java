@@ -10,7 +10,7 @@ import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.example.nave.game.TitleScreen;
+import com.example.nave.game.scenes.TitleScreen;
 
 public class MainActivity extends Activity {
 
