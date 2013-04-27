@@ -26,17 +26,17 @@ public class TitleScreen extends CCLayer {
 	public TitleScreen() {
 	
 		// background
-		this.background = new ScreenBackground(Assets.background);
+		this.background = new ScreenBackground(Assets.BACKGROUND);
 		this.background.setPosition(screenResolution(CGPoint.ccp(screenWidth() / 2.0f, screenHeight() / 2.0f)));
 		this.addChild(this.background);
 		
 		// logo
-		CCSprite title = CCSprite.sprite(Assets.logo);
+		CCSprite title = CCSprite.sprite(Assets.LOGO);
 		title.setPosition(screenResolution(CGPoint.ccp( screenWidth() /2 , screenHeight() - 130 ))) ;
 		this.addChild(title);
 		
 		// Add options layer
-		MenuButtons menuLayer = MenuButtons.menuButtons();
+		MenuButtons menuLayer = new MenuButtons();
 		this.addChild(menuLayer);
 		
 	}

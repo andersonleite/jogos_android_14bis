@@ -19,6 +19,7 @@ import org.cocos2d.types.CGRect;
 import com.example.nave.R;
 import com.example.nave.config.Assets;
 import com.example.nave.config.Runner;
+import com.example.nave.game.calibrate.CalibrateScene;
 import com.example.nave.game.control.GameButtons;
 import com.example.nave.game.engines.MeteorsEngine;
 import com.example.nave.game.interfaces.MeteorsEngineDelegate;
@@ -31,45 +32,56 @@ import com.example.nave.game.objects.Shoot;
 import com.example.nave.screens.PauseScreen;
 import com.example.nave.screens.ScreenBackground;
 
-public class GameScene extends CCLayer implements MeteorsEngineDelegate,
-		ShootEngineDelegate,
-
-		// PAUSE
-		PauseDelegate {
-
-	private ScreenBackground background;
-	private MeteorsEngine meteorsEngine;
+public class GameScene 	
+					extends CCLayer 
+					implements 	MeteorsEngineDelegate,
+								ShootEngineDelegate, 
+								PauseDelegate {
+	
+	// Layers
 	private CCLayer meteorsLayer;
-
-	// score
 	private CCLayer scoreLayer;
-	private Score score;
-
-	private ArrayList meteorsArray;
-
 	private CCLayer playerLayer;
-	private Player player;
-
-	// startgame
-	private ArrayList playersArray;
-
 	private CCLayer shootsLayer;
-	private ArrayList shootsArray;
-
-	// PAUSE
-	private PauseScreen pauseScreen;
 	private CCLayer layerTop;
 
+	// Engines
+	private MeteorsEngine meteorsEngine;
+
+	// Arrays
+	@SuppressWarnings("rawtypes") private ArrayList meteorsArray;
+	@SuppressWarnings("rawtypes") private ArrayList playersArray;
+	@SuppressWarnings("rawtypes") private ArrayList shootsArray;
+
+	// Screens
+	private PauseScreen pauseScreen;
+	
+	// Game Objects
+	private Player player;
+	private Score score;
+	private boolean autoCalibration;
+	private ScreenBackground background;
+	
 	public static CCScene createGame() {
-		CCScene scene = CCScene.node();
+		
+		// Create Scene
 		GameScene layer = new GameScene();
+		CCScene scene = CCScene.node();
 		scene.addChild(layer);
+		
+		// Start AutoCalibration
+		CalibrateScene calibrate = new CalibrateScene();
+		layer.layerTop.addChild(calibrate);
+		calibrate.calibrateAndPerformSelector("startGame", layer);
+		layer.autoCalibration = true;
+		
 		return scene;
 	}
 
 	private GameScene() {
 
-		this.background = new ScreenBackground(Assets.background);
+		// Background	
+		this.background = new ScreenBackground(Assets.BACKGROUND);
 		this.background.setPosition(screenResolution(CGPoint.ccp(
 				screenWidth() / 2.0f, screenHeight() / 2.0f)));
 		this.addChild(this.background);
@@ -77,27 +89,23 @@ public class GameScene extends CCLayer implements MeteorsEngineDelegate,
 		GameButtons gameButtonsLayer = GameButtons.gameButtons();
 		gameButtonsLayer.setDelegate(this);
 		this.addChild(gameButtonsLayer);
-
+		
+		// Create Layers
 		this.meteorsLayer = CCLayer.node();
-		this.addChild(this.meteorsLayer);
-
 		this.playerLayer = CCLayer.node();
-		this.addChild(this.playerLayer);
-
 		this.scoreLayer = CCLayer.node();
-		this.addChild(this.scoreLayer);
 
 		this.addGameObjects();
 
 		this.shootsLayer = CCLayer.node();
-		this.addChild(this.shootsLayer);
-
-		// pause
 		this.layerTop = CCLayer.node();
-		this.addChild(this.layerTop);
-
-		//final
 		
+		// Add Layers
+		this.addChild(this.meteorsLayer);
+		this.addChild(this.playerLayer);
+		this.addChild(this.scoreLayer);
+		this.addChild(this.shootsLayer);
+		this.addChild(this.layerTop);
 		
 		this.setIsTouchEnabled(true);
 
@@ -123,7 +131,7 @@ public class GameScene extends CCLayer implements MeteorsEngineDelegate,
 		this.meteorsArray = new ArrayList();
 		this.meteorsEngine = new MeteorsEngine();
 
-		this.player = new Player();
+		this.player = new Player();		
 		this.playerLayer.addChild(this.player);
 
 		// score
@@ -139,14 +147,15 @@ public class GameScene extends CCLayer implements MeteorsEngineDelegate,
 		this.player.setDelegate(this);
 	}
 
-	@Override
-	public void onEnter() {
-		super.onEnter();
-
+	public void startGame() {
+		
 		// Set Game Status
 		// PAUSE
 		Runner.check().setGamePlaying(true);
 		Runner.check().setGamePaused(false);
+		
+		// Catch Accelerometer
+		player.catchAccelerometer();
 		
 		// pause
 		SoundEngine.sharedEngine().setEffectsVolume(1f);
@@ -156,6 +165,16 @@ public class GameScene extends CCLayer implements MeteorsEngineDelegate,
 		this.schedule("checkHits");
 
 		this.startEngines();
+	}
+	
+	@Override
+	public void onEnter() {
+		super.onEnter();
+
+		// Start Game when transition did finish
+		if (!this.autoCalibration) {
+			this.startGame();
+		}		
 	}
 
 	// startgame
@@ -233,8 +252,7 @@ public class GameScene extends CCLayer implements MeteorsEngineDelegate,
 	}
 
 	@Override
-	public void createMeteor(Meteor meteor, float x, float y, float vel,
-			double ang, int vl) {
+	public void createMeteor(Meteor meteor) {
 
 		this.meteorsLayer.addChild(meteor);
 		meteor.setDelegate(this);
@@ -337,6 +355,7 @@ public class GameScene extends CCLayer implements MeteorsEngineDelegate,
 	public void startFinalScreen() {
 		CCDirector.sharedDirector().replaceScene(new FinalScreen().scene());
 	}
+
 
 }
 

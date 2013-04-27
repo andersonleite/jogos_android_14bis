@@ -24,7 +24,7 @@ public class MeteorsEngine extends CCLayer {
 
 			if (new Random().nextInt(30) == 0) {
 				this.getDelegate().createMeteor(
-						new Meteor(Assets.meteor).generate(), 1, 1, 1, 1, 1);
+						new Meteor(Assets.METEOR));
 			}
 
 		}

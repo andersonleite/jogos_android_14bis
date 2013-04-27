@@ -14,10 +14,6 @@ public class Button extends CCLayer {
 	private CCSprite buttonImage;
 	private ButtonDelegate delegate;
 
-	public static Button buttonWithFile(String buttonImage) {
-		return new Button(buttonImage);
-	}
-
 	public Button(String buttonImage) {
 
 		// Enable Touch
@@ -48,19 +44,11 @@ public class Button extends CCLayer {
 
 		// Check Button touched
 		if (CGRect.containsPoint(
-				this.getSpriteRectWithOffset(this.buttonImage), touchLocation)) {
+				this.buttonImage.getBoundingBox(), touchLocation)) {
 			delegate.buttonClicked(this);
 		}
 		
 		return true;
-	}
-
-	private CGRect getSpriteRectWithOffset(CCSprite sprite) {
-		float w = sprite.getContentSize().width;
-		float h = sprite.getContentSize().height;
-		float x = sprite.getPosition().x - w / 2;
-		float y = sprite.getPosition().y - h / 2;
-		return CGRect.make(x, y, w, h);
 	}
 
 }

@@ -17,18 +17,14 @@ public class MenuButtons extends CCLayer implements ButtonDelegate {
 	private Button playButton;
 	private Button highscoredButton;
 	
-	public static MenuButtons menuButtons() {
-		return new MenuButtons();
-	}
-
 	public MenuButtons() {
 
 		// Enable Touch
 		this.setIsTouchEnabled(true);
 		
 		// Create Buttons
-		this.playButton 	  = Button.buttonWithFile(Assets.play);
-		this.highscoredButton = Button.buttonWithFile(Assets.highscore);
+		this.playButton 	  = new Button(Assets.PLAY);
+		this.highscoredButton = new Button(Assets.HIGHSCORE);
 		
 		// Set Buttons Delegates
 		this.playButton.setDelegate(this);

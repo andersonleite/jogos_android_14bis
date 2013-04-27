@@ -24,7 +24,7 @@ public class Shoot extends CCSprite {
 	float positionX, positionY;
 
 	public Shoot(float positionX, float positionY) {
-		super(Assets.shoot);
+		super(Assets.SHOOT);
 		this.positionX = positionX;
 		this.positionY = positionY;
 		setPosition(this.positionX, this.positionY);

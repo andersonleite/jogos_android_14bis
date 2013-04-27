@@ -2,21 +2,22 @@ package com.example.nave.config;
 
 public class Assets {
 
-	public static String  background = "background.png";
-	public static String  logo 		 = "logo.png";
-	public static String  finalend 	 = "finalend.png";
-	public static String  gameover 	 = "gameover.png";
+	public static String  BACKGROUND = "background.png";
+	public static String  LOGO 		 = "logo.png";
+	public static String  FINALEND 	 = "finalend.png";
+	public static String  GAMEOVER 	 = "gameover.png";
 	
-	public static String  play 		 = "play.png";
-	public static String  highscore  = "highscore.png";
-	public static String  help  	 = "help.png";
-	public static String  sound      = "sound.png";
+	public static String  PLAY 		 = "play.png";
+	public static String  HIGHSCORE  = "highscore.png";
+	public static String  HELP  	 = "help.png";
+	public static String  SOUND      = "sound.png";
 
-	public static String  meteor     = "meteor.png";
-	public static String  nave       = "nave.png";
-	public static String  shoot      = "shoot.png";
+	public static String  METEOR     = "meteor.png";
+	public static String  NAVE       = "nave.png";
+	public static String  SHOOT      = "shoot.png";
 	
-	public static String leftControl  = "left.png";
-	public static String rightControl = "right.png";
-	public static String shootButton  = "shootButton.png";
+	public static String LEFTCONTROL  = "left.png";
+	public static String RIGHTCONTROL = "right.png";
+	public static String SHOOTBUTTON  = "shootButton.png";
+	
 }

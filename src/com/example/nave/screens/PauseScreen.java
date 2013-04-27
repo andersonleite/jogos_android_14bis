@@ -37,13 +37,13 @@ public class PauseScreen extends CCLayer implements ButtonDelegate {
 		this.addChild(this.background);
 
 		// logo
-		CCSprite title = CCSprite.sprite(Assets.logo);
+		CCSprite title = CCSprite.sprite(Assets.LOGO);
 		title.setPosition(screenResolution(CGPoint.ccp( screenWidth() /2 , screenHeight() - 130 ))) ;
 		this.addChild(title);
 
 		// Add Buttons
-		this.resumeButton = Button.buttonWithFile(Assets.play);
-		this.quitButton = Button.buttonWithFile(Assets.help);
+		this.resumeButton = new Button(Assets.PLAY);
+		this.quitButton = new Button(Assets.HELP);
 		this.resumeButton.setDelegate(this);
 		this.quitButton.setDelegate(this);
 		this.addChild(this.resumeButton);

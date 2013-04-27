@@ -29,10 +29,10 @@ public class GameButtons extends CCLayer implements ButtonDelegate {
 		this.setIsTouchEnabled(true);
 		
 		// Create Buttons
-		this.leftControl 	= Button.buttonWithFile(Assets.leftControl);
-		this.rightControl 	= Button.buttonWithFile(Assets.rightControl);
-		this.shootButton 	= Button.buttonWithFile(Assets.shootButton);
-		this.pauseButton 	= Button.buttonWithFile(Assets.sound);
+		this.leftControl 	= new Button(Assets.LEFTCONTROL);
+		this.rightControl 	= new Button(Assets.RIGHTCONTROL);
+		this.shootButton 	= new Button(Assets.SHOOTBUTTON);
+		this.pauseButton 	= new Button(Assets.SOUND);
 		
 		// Set Buttons Delegates
 		this.leftControl.setDelegate(this);

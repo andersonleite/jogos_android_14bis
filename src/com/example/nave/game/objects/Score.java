@@ -36,7 +36,7 @@ public class Score  extends CCLayer {
 		score++;		
 		this.text.setString(String.valueOf(this.score)); 
 		
-		if(score==1){
+		if(score==5){
 			this.delegate.startFinalScreen();
 		}
 		

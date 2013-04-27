@@ -32,7 +32,7 @@ public class FinalScreen extends CCLayer implements ButtonDelegate{
 	public FinalScreen() {
 		
 		// background
-		this.background = new ScreenBackground(Assets.background);
+		this.background = new ScreenBackground(Assets.BACKGROUND);
 		this.background.setPosition(screenResolution(CGPoint.ccp(screenWidth() / 2.0f, screenHeight() / 2.0f)));
 		this.addChild(this.background);
 		
@@ -41,13 +41,13 @@ public class FinalScreen extends CCLayer implements ButtonDelegate{
 				CCDirector.sharedDirector().getActivity(), R.raw.finalend, true);
 		
 		// image
-		CCSprite title = CCSprite.sprite(Assets.finalend);
+		CCSprite title = CCSprite.sprite(Assets.FINALEND);
 		title.setPosition(screenResolution(CGPoint.ccp( screenWidth() /2 , screenHeight() - 130 ))) ;
 		this.addChild(title);
 		
 		// Enable Touch
 		this.setIsTouchEnabled(true);
-		this.beginButton = Button.buttonWithFile(Assets.play);
+		this.beginButton = new Button(Assets.PLAY);
 		this.beginButton.setPosition(screenResolution(CGPoint.ccp( screenWidth() /2 , screenHeight() - 300 ))) ;
 		this.beginButton.setDelegate(this);
 		addChild(this.beginButton);

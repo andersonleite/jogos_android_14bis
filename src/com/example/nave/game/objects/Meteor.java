@@ -24,16 +24,12 @@ import com.example.nave.game.interfaces.MeteorsEngineDelegate;
 public class Meteor extends CCSprite {
 
 	private MeteorsEngineDelegate delegate;
-	float x, y;
+	private float x, y;
 
 	public Meteor(String image) {
 		super(image);
 		x = new Random().nextInt(Math.round(screenWidth()));
 		y = screenHeight();
-	}
-
-	public Meteor generate() {
-		return new Meteor(Assets.meteor);
 	}
 
 	public void start() {
