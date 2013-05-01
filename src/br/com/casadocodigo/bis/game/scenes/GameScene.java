@@ -19,7 +19,6 @@ import org.cocos2d.types.CGRect;
 import br.com.casadocodigo.bis.R;
 import br.com.casadocodigo.bis.config.Assets;
 import br.com.casadocodigo.bis.config.Runner;
-import br.com.casadocodigo.bis.game.calibrate.CalibrateScene;
 import br.com.casadocodigo.bis.game.control.GameButtons;
 import br.com.casadocodigo.bis.game.engines.MeteorsEngine;
 import br.com.casadocodigo.bis.game.interfaces.MeteorsEngineDelegate;
@@ -69,12 +68,6 @@ public class GameScene
 		GameScene layer = new GameScene();
 		CCScene scene = CCScene.node();
 		scene.addChild(layer);
-		
-		// Start AutoCalibration
-		CalibrateScene calibrate = new CalibrateScene();
-		layer.layerTop.addChild(calibrate);
-		calibrate.calibrateAndPerformSelector("startGame", layer);
-		layer.autoCalibration = true;
 		
 		return scene;
 	}
