@@ -77,18 +77,7 @@ public class Accelerometer implements SensorEventListener {
 		this.currentAccelerationX = acceleration.values[0] - this.calibratedAccelerationX;
 		this.currentAccelerationY = acceleration.values[1] - this.calibratedAccelerationY;
 
-		System.out.println("=====================");
-		System.out.println(calibrated);
-		System.out.println(this.calibratedAccelerationX);
-		System.out.println(this.calibratedAccelerationY);
-		System.out.println("---");
-		System.out.println(this.currentAccelerationX);
-		System.out.println(this.currentAccelerationY);
-		System.out.println("---");
-		System.out.println(acceleration.values[0]);
-		System.out.println(acceleration.values[1]);
-
-		
+	
 		// Dispatch Accelerometer Read
 		if (this.delegate != null) {
 			this.delegate.accelerometerDidAccelerate(currentAccelerationX, currentAccelerationY);
@@ -102,32 +91,6 @@ public class Accelerometer implements SensorEventListener {
 
 	public AccelerometerDelegate getDelegate() {
 		return delegate;
-	}
-
-	public double calibratedDifferenceFromXRadians(double rad) {
-
-		double radDiff = rad; // - this.calibratedRadiansX;
-		if (radDiff > Math.PI) {
-			radDiff = rad - 2 * Math.PI;
-		}
-		if (radDiff < -Math.PI) {
-			radDiff = (rad + (2 * Math.PI));// - this.calibratedRadiansX;
-		}
-
-		return radDiff;
-	}
-
-	public double calibratedDifferenceFromYRadians(double rad) {
-
-		double radDiff = rad;// - this.calibratedRadiansY;
-		if (radDiff > Math.PI) {
-			radDiff = rad - 2 * Math.PI;
-		}
-		if (radDiff < -Math.PI) {
-			radDiff = (rad + (2 * Math.PI));// - this.calibratedRadiansY;
-		}
-
-		return radDiff;
 	}
 
 }

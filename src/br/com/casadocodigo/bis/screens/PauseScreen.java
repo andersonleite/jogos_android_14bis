@@ -44,7 +44,7 @@ public class PauseScreen extends CCLayer implements ButtonDelegate {
 
 		// Add Buttons
 		this.resumeButton = new Button(Assets.PLAY);
-		this.quitButton = new Button(Assets.HELP);
+		this.quitButton = new Button(Assets.EXIT);
 		this.resumeButton.setDelegate(this);
 		this.quitButton.setDelegate(this);
 		this.addChild(this.resumeButton);

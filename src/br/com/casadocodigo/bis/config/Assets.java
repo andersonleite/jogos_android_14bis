@@ -8,9 +8,11 @@ public class Assets {
 	public static String  GAMEOVER 	 = "gameover.png";
 	
 	public static String  PLAY 		 = "play.png";
+	public static String  PAUSE		 = "pause.png";
 	public static String  HIGHSCORE  = "highscore.png";
 	public static String  HELP  	 = "help.png";
 	public static String  SOUND      = "sound.png";
+	public static String  EXIT		 = "exit.png";
 
 	public static String  METEOR     = "meteor.png";
 	public static String  NAVE       = "nave.png";

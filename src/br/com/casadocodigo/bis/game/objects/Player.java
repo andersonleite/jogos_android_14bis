@@ -99,6 +99,9 @@ public class Player extends CCSprite implements AccelerometerDelegate{
 	public void accelerometerDidAccelerate(float x, float y) {
 		if (Runner.check().isGamePlaying() && !Runner.check().isGamePaused() ) {
 
+			System.out.println("X: " + x);
+			System.out.println("Y: " + y);
+			
 			// Read acceleration
 			this.currentAccelX = x;
 			this.currentAccelY = y;

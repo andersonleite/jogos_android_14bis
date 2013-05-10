@@ -33,7 +33,7 @@ public class GameButtons extends CCLayer implements ButtonDelegate {
 		this.leftControl 	= new Button(Assets.LEFTCONTROL);
 		this.rightControl 	= new Button(Assets.RIGHTCONTROL);
 		this.shootButton 	= new Button(Assets.SHOOTBUTTON);
-		this.pauseButton 	= new Button(Assets.SOUND);
+		this.pauseButton 	= new Button(Assets.PAUSE);
 		
 		// Set Buttons Delegates
 		this.leftControl.setDelegate(this);
@@ -45,8 +45,8 @@ public class GameButtons extends CCLayer implements ButtonDelegate {
 		setButtonspPosition();
 
 		// Add Buttons to Screen
-		addChild(leftControl);
-		addChild(rightControl);
+//		addChild(leftControl);
+//		addChild(rightControl);
 		addChild(shootButton);
 		addChild(pauseButton);
 		
