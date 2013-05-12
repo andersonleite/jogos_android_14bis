@@ -173,12 +173,11 @@ public class GameScene extends CCLayer implements MeteorsEngineDelegate,
 
 	// startgame
 	public void checkHits(float dt) {
-		boolean hitTest = false;
 
-		hitTest = this.checkRadiusHitsOfArray(this.meteorsArray,
+		this.checkRadiusHitsOfArray(this.meteorsArray,
 				this.shootsArray, this, "meteoroHit");
 
-		hitTest = this.checkRadiusHitsOfArray(this.meteorsArray,
+		this.checkRadiusHitsOfArray(this.meteorsArray,
 				this.playersArray, this, "playerHit");
 
 	}
