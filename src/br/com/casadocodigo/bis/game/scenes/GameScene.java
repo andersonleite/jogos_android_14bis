@@ -7,6 +7,7 @@ import static br.com.casadocodigo.bis.config.DeviceSettings.screenWidth;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.cocos2d.layers.CCLayer;
 import org.cocos2d.layers.CCScene;
@@ -31,13 +32,9 @@ import br.com.casadocodigo.bis.game.objects.Shoot;
 import br.com.casadocodigo.bis.screens.PauseScreen;
 import br.com.casadocodigo.bis.screens.ScreenBackground;
 
+public class GameScene extends CCLayer implements MeteorsEngineDelegate,
+		ShootEngineDelegate, PauseDelegate {
 
-public class GameScene 	
-					extends CCLayer 
-					implements 	MeteorsEngineDelegate,
-								ShootEngineDelegate, 
-								PauseDelegate {
-	
 	// Layers
 	private CCLayer meteorsLayer;
 	private CCLayer scoreLayer;
@@ -49,32 +46,35 @@ public class GameScene
 	private MeteorsEngine meteorsEngine;
 
 	// Arrays
-	@SuppressWarnings("rawtypes") private ArrayList meteorsArray;
-	@SuppressWarnings("rawtypes") private ArrayList playersArray;
-	@SuppressWarnings("rawtypes") private ArrayList shootsArray;
+	@SuppressWarnings("rawtypes")
+	private ArrayList meteorsArray;
+	@SuppressWarnings("rawtypes")
+	private ArrayList playersArray;
+	@SuppressWarnings("rawtypes")
+	private ArrayList shootsArray;
 
 	// Screens
 	private PauseScreen pauseScreen;
-	
+
 	// Game Objects
 	private Player player;
 	private Score score;
 	private boolean autoCalibration;
 	private ScreenBackground background;
-	
+
 	public static CCScene createGame() {
-		
+
 		// Create Scene
 		GameScene layer = new GameScene();
 		CCScene scene = CCScene.node();
 		scene.addChild(layer);
-		
+
 		return scene;
 	}
 
 	private GameScene() {
 
-		// Background	
+		// Background
 		this.background = new ScreenBackground(Assets.BACKGROUND);
 		this.background.setPosition(screenResolution(CGPoint.ccp(
 				screenWidth() / 2.0f, screenHeight() / 2.0f)));
@@ -83,7 +83,7 @@ public class GameScene
 		GameButtons gameButtonsLayer = GameButtons.gameButtons();
 		gameButtonsLayer.setDelegate(this);
 		this.addChild(gameButtonsLayer);
-		
+
 		// Create Layers
 		this.meteorsLayer = CCLayer.node();
 		this.playerLayer = CCLayer.node();
@@ -93,14 +93,14 @@ public class GameScene
 
 		this.shootsLayer = CCLayer.node();
 		this.layerTop = CCLayer.node();
-		
+
 		// Add Layers
 		this.addChild(this.meteorsLayer);
 		this.addChild(this.playerLayer);
 		this.addChild(this.scoreLayer);
 		this.addChild(this.shootsLayer);
 		this.addChild(this.layerTop);
-		
+
 		this.setIsTouchEnabled(true);
 
 		// sons
@@ -125,7 +125,7 @@ public class GameScene
 		this.meteorsArray = new ArrayList();
 		this.meteorsEngine = new MeteorsEngine();
 
-		this.player = new Player();		
+		this.player = new Player();
 		this.playerLayer.addChild(this.player);
 
 		// score
@@ -142,15 +142,15 @@ public class GameScene
 	}
 
 	public void startGame() {
-		
+
 		// Set Game Status
 		// PAUSE
 		Runner.check().setGamePlaying(true);
 		Runner.check().setGamePaused(false);
-		
+
 		// Catch Accelerometer
 		player.catchAccelerometer();
-		
+
 		// pause
 		SoundEngine.sharedEngine().setEffectsVolume(1f);
 		SoundEngine.sharedEngine().setSoundVolume(1f);
@@ -160,7 +160,7 @@ public class GameScene
 
 		this.startEngines();
 	}
-	
+
 	@Override
 	public void onEnter() {
 		super.onEnter();
@@ -168,7 +168,7 @@ public class GameScene
 		// Start Game when transition did finish
 		if (!this.autoCalibration) {
 			this.startGame();
-		}		
+		}
 	}
 
 	// startgame
@@ -176,58 +176,53 @@ public class GameScene
 		boolean hitTest = false;
 
 		hitTest = this.checkRadiusHitsOfArray(this.meteorsArray,
-				this.shootsArray, false, this, "meteoroHit");
+				this.shootsArray, this, "meteoroHit");
 
 		hitTest = this.checkRadiusHitsOfArray(this.meteorsArray,
-				this.playersArray, false, this, "playerHit");
+				this.playersArray, this, "playerHit");
 
 	}
 
-	private boolean checkRadiusHitsOfArray(ArrayList array1, ArrayList array2,
-			boolean b, GameScene gameScene, String hit) {
+	private boolean checkRadiusHitsOfArray(List<? extends CCSprite> array1,
+			List<? extends CCSprite> array2, GameScene gameScene, String hit) {
 
 		boolean result = false;
-		int len1 = array1.size();
-		int len2 = array2.size();
-		boolean breakFor = false;
 
-		if (len1 > 0 && len2 > 0) {
-			for (int i = 0; i < len1; i++) {
-				// Get Object from First Array
-				CGRect rect1 = getBoarders((CCSprite) array1.get(i));
+		for (int i = 0; i < array1.size(); i++) {
+			// Get Object from First Array
+			CGRect rect1 = getBoarders(array1.get(i));
 
-				for (int j = 0; j < len2; j++) {
-					// Get Object from Second Array
-					CGRect rect2 = getBoarders((CCSprite) array2.get(j));
+			for (int j = 0; j < array2.size(); j++) {
+				// Get Object from Second Array
+				CGRect rect2 = getBoarders(array2.get(j));
 
-					// Check Hit!
-					if (CGRect.intersects(rect1, rect2)) {
-						System.out.println("Colision Detected: " + hit);
-						result = true;
+				// Check Hit!
+				if (CGRect.intersects(rect1, rect2)) {
+					System.out.println("Colision Detected: " + hit);
+					result = true;
 
-						Method method;
-						try {
-							method = GameScene.class.getMethod(hit,
-									CCSprite.class, CCSprite.class);
+					Method method;
+					try {
+						method = GameScene.class.getMethod(hit, CCSprite.class,
+								CCSprite.class);
 
-							method.invoke(gameScene, array1.get(i),
-									array2.get(j));
+						method.invoke(gameScene, array1.get(i), array2.get(j));
 
-						} catch (SecurityException e1) {
-							e1.printStackTrace();
-						} catch (NoSuchMethodException e1) {
-							e1.printStackTrace();
-						} catch (IllegalArgumentException e) {
-							e.printStackTrace();
-						} catch (IllegalAccessException e) {
-							e.printStackTrace();
-						} catch (InvocationTargetException e) {
-							e.printStackTrace();
-						}
+					} catch (SecurityException e1) {
+						e1.printStackTrace();
+					} catch (NoSuchMethodException e1) {
+						e1.printStackTrace();
+					} catch (IllegalArgumentException e) {
+						e.printStackTrace();
+					} catch (IllegalAccessException e) {
+						e.printStackTrace();
+					} catch (InvocationTargetException e) {
+						e.printStackTrace();
 					}
 				}
 			}
 		}
+
 		return result;
 	}
 
@@ -341,7 +336,7 @@ public class GameScene
 	public void quitGame() {
 		SoundEngine.sharedEngine().setEffectsVolume(0f);
 		SoundEngine.sharedEngine().setSoundVolume(0f);
-		
+
 		CCDirector.sharedDirector().replaceScene(new TitleScreen().scene());
 
 	}
@@ -350,7 +345,4 @@ public class GameScene
 		CCDirector.sharedDirector().replaceScene(new FinalScreen().scene());
 	}
 
-
 }
-
-

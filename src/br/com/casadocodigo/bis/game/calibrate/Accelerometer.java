@@ -35,16 +35,11 @@ public class Accelerometer implements SensorEventListener {
 
 	public void catchAccelerometer() {
 
-		sensorManager = DeviceSettings.sensormanager;
+		sensorManager = DeviceSettings.getSensormanager();
 		sensorManager.registerListener(this,
 				sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
 				SensorManager.SENSOR_DELAY_GAME);
 
-	}
-
-	@Override
-	protected Object clone() throws CloneNotSupportedException {
-		return super.clone();
 	}
 
 	@Override

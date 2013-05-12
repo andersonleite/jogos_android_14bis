@@ -8,7 +8,7 @@ import android.hardware.SensorManager;
 
 public class DeviceSettings {
 	
-	public static SensorManager sensormanager;
+	private static SensorManager sensormanager;
 	
 	public static void setSensorManager(SensorManager sensorManagerRef) {
 		sensormanager = sensorManagerRef;
@@ -28,6 +28,10 @@ public class DeviceSettings {
 	
 	public static CGSize winSize() {
 		return CCDirector.sharedDirector().winSize();
+	}
+	
+	public static SensorManager getSensormanager() {
+		return sensormanager;
 	}
 
 
