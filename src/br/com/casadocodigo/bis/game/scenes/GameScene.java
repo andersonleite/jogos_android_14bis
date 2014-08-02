@@ -104,8 +104,8 @@ public class GameScene extends CCLayer implements MeteorsEngineDelegate,
 		this.setIsTouchEnabled(true);
 
 		// sons
-		SoundEngine.sharedEngine().playSound(
-				CCDirector.sharedDirector().getActivity(), R.raw.music, true);
+		// exercicio 6 
+		// adicione musica ao jogo
 
 		preloadCache();
 	}
@@ -126,7 +126,8 @@ public class GameScene extends CCLayer implements MeteorsEngineDelegate,
 		this.meteorsEngine = new MeteorsEngine();
 
 		this.player = new Player();
-		this.playerLayer.addChild(this.player);
+		// exercicio 4
+		// adicione o player ao jogo
 
 		// score
 		this.score = new Score();
@@ -149,7 +150,8 @@ public class GameScene extends CCLayer implements MeteorsEngineDelegate,
 		Runner.check().setGamePaused(false);
 
 		// Catch Accelerometer
-		player.catchAccelerometer();
+		// exercicio 7
+		// Habilite o acelerometro
 
 		// pause
 		SoundEngine.sharedEngine().setEffectsVolume(1f);
@@ -196,29 +198,30 @@ public class GameScene extends CCLayer implements MeteorsEngineDelegate,
 				CGRect rect2 = getBoarders(array2.get(j));
 
 				// Check Hit!
-				if (CGRect.intersects(rect1, rect2)) {
-					System.out.println("Colision Detected: " + hit);
-					result = true;
-
-					Method method;
-					try {
-						method = GameScene.class.getMethod(hit, CCSprite.class,
-								CCSprite.class);
-
-						method.invoke(gameScene, array1.get(i), array2.get(j));
-
-					} catch (SecurityException e1) {
-						e1.printStackTrace();
-					} catch (NoSuchMethodException e1) {
-						e1.printStackTrace();
-					} catch (IllegalArgumentException e) {
-						e.printStackTrace();
-					} catch (IllegalAccessException e) {
-						e.printStackTrace();
-					} catch (InvocationTargetException e) {
-						e.printStackTrace();
-					}
-				}
+				// exercicio 5
+//				if (CGRect.intersects(rect1, rect2)) {
+//					System.out.println("Colision Detected: " + hit);
+//					result = true;
+//
+//					Method method;
+//					try {
+//						method = GameScene.class.getMethod(hit, CCSprite.class,
+//								CCSprite.class);
+//
+//						method.invoke(gameScene, array1.get(i), array2.get(j));
+//
+//					} catch (SecurityException e1) {
+//						e1.printStackTrace();
+//					} catch (NoSuchMethodException e1) {
+//						e1.printStackTrace();
+//					} catch (IllegalArgumentException e) {
+//						e.printStackTrace();
+//					} catch (IllegalAccessException e) {
+//						e.printStackTrace();
+//					} catch (InvocationTargetException e) {
+//						e.printStackTrace();
+//					}
+//				}
 			}
 		}
 

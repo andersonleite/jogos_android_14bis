@@ -52,8 +52,11 @@ public class MenuButtons extends CCLayer implements ButtonDelegate {
 		
 		if (sender.equals(this.playButton)) {
 			System.out.println("Button clicked: Play");
-			CCDirector.sharedDirector().replaceScene(
-					CCFadeTransition.transition(1.0f, GameScene.createGame()));
+			
+			// exercicio 3
+			// direcione para a tela do game
+			
+			
 		}
 		
 		if (sender.equals(this.highscoredButton)) {
